@@ -303,7 +303,11 @@ const MODULES = [
     "Device management in a workgroup environment"
   ]},
   { code:"COS622", name:"Computer Systems 2B", year:"2nd years", due:"2026-10-06", color:"#7A4FD6", topics:[
-    // TODO: add COS622 FA2 topics here
+    "Cloud service models (IaaS, PaaS, SaaS)",
+    "Azure regions & availability zones",
+    "Azure resource groups & management",
+    "Core Azure services (compute, networking, storage)",
+    "Azure databases & integration"
   ]},
   { code:"NET512", name:"Networking 1B", year:"1st years", due:"2026-10-08", color:"#0E8F7E", topics:[
     "Network device security management",
@@ -516,7 +520,10 @@ function renderDays(){
           <div class="meta">${esc(b.module)}, Topic ${esc(b.topicNo)}</div></div>`;
       }
       if (past) return `<div class="slot shut"><span class="t">${t}</span><span>Passed</span></div>`;
-      if (sel && !canModuleBook(sel, iso)) return `<div class="slot shut"><span class="t">${t}</span><span>After ${sel.code} due date</span></div>`;
+      if (sel && !canModuleBook(sel, iso)) {
+        const why = sel.topics.length ? "After due date" : "Not open yet";
+        return `<div class="slot shut"><span class="t">${t}</span><span>${why}</span></div>`;
+      }
       return `<button class="slot free" ${loaded?"":"disabled"} onclick="openBooking('${iso}','${t}')" aria-label="Book ${fmtLong(iso)} at ${t}">
         <span class="t">${t}</span><span class="go">${loaded?"Book":"Loading"}</span></button>`;
     }).join("");
